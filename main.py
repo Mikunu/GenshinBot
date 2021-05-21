@@ -3,6 +3,8 @@ from vk_api.utils import get_random_id
 import datetime, random, json
 from vk_api.bot_longpoll import VkBotLongPoll, VkBotEventType
 
+byezhong = "\n\nС уважением, Чжун Ли."
+
 def say_message(text, attachment=None):
     vk.messages.send(
         key=key,
@@ -33,7 +35,7 @@ def joke():
     lines = f.readlines()
     for line in lines:
         message += line
-    message += "\n\nС уважением, Чжун ли."
+    message += byezhong
     f.close()
     return message
 
@@ -64,7 +66,7 @@ for event in longpoll.listen():
         elif 'Привет!' in str(event) or 'привет!' in str(event):
             if event.from_chat:
                 if random.randint(0, 19) == 0:
-                    say_message('Я родился!\nПоздравляю, сегодня тебе повезёт в гаче(нет)\n\nС уважением, Чжун Ли.')
+                    say_message(f'Я родился!\nПоздравляю, сегодня тебе повезёт в гаче(нет){byezhong}')
                 else:
                     greetnum = None
                     nowtime = (datetime.datetime.utcnow() + datetime.timedelta(hours=3)).hour
@@ -81,7 +83,7 @@ for event in longpoll.listen():
                         for i in range(greetnum):
                             greetmessage =greetingf.readline()
                     greetingf.close()
-                    say_message(f'{greetmessage}\n\nС уважением, Чжун Ли.')
+                    say_message(f'{greetmessage}{byezhong}')
 
         elif 'Пока!' in str(event) or 'пока!' in str(event):
             if event.from_chat:
@@ -102,14 +104,14 @@ for event in longpoll.listen():
                     for i in range(goodbyenum):
                         greetmessage = goodbyef.readline()
                 goodbyef.close()
-                say_message(f'{greetmessage}\n\nС уважением, Чжун Ли.')
+                say_message(f'{greetmessage}{byezhong}')
 
         elif 'Как дела?' in str(event) or 'как дела?' in str(event):
             if event.from_chat:
                 if (random.randint(0, 19) == 0):
                     say_message('Дай мору\n\nС уважением, Чжун Ли.')
                 else:
-                    say_message('Сегодня выдался продуктивный день\n\nС уважением, Чжун Ли.',
+                    say_message(f'Сегодня выдался продуктивный день{byezhong}',
                                 'photo-175821022_457239616')
 
         elif 'Чжун сегодня' in str(event) or 'чжун сегодня' in str(event):
@@ -145,17 +147,17 @@ for event in longpoll.listen():
         elif 'Чжун Ли инфа' in str(event) or 'чжун ли инфа' in str(event) or 'Чжун инфа' in str(
                 event) or 'чжун инфа' in str(event):
             if event.from_chat:
-                say_message(f'Вероятность примерно {str(random.randint(0, 100))}%\n\nС уважением, Чжун Ли.')
+                say_message(f'Вероятность примерно {str(random.randint(0, 100))}%{byezhong}')
 
         elif 'Чжун помощь' in str(event) or 'чжун помощь' in str(event):
             if event.from_chat:
                 say_message(
                     'Список команд:\n「Общение」\n⠀• Привет!\n⠀• Как дела?\n⠀'
-                    '• Пока!\n⠀• Бот\n「Информация」\n⠀• Чжун сегодня\n⠀• Чжун инфа\n\nС уважением, Чжун Ли.')
+                    f'• Пока!\n⠀• Бот\n「Информация」\n⠀• Чжун сегодня\n⠀• Чжун инфа{byezhong}')
 
         elif 'Помогите!' in str(event):
             if event.from_chat:
-                    say_message('Тебе уже ничего не поможет.\n\nС уважением, Чжун Ли.')
+                    say_message(f'Тебе уже ничего не поможет.{byezhong}')
         elif 'Чжун анекдот' in str(event) or 'чжун анекдот' in str(event):
             if event.from_chat:
                 say_message(joke())
