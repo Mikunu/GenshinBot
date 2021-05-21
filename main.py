@@ -30,7 +30,7 @@ def answer_message(chat_id, id_message, peer_id, text):
 
 def joke():
     num = random.randint(0, 19)
-    f = open(f"jokes/joke{num}.txt", "r")
+    f = open(f"txts/jokes/joke{num}.txt", "r")
     message = "Дорогой друг, сейчас я расскажу тебе, что я сегодня прочитал в интересной книге\n\n"
     lines = f.readlines()
     for line in lines:
@@ -79,7 +79,7 @@ for event in longpoll.listen():
                     elif 18 < nowtime <= 23:
                         greetnum = 3  # Вечер
 
-                    with open("greeting.txt", 'r') as greetingf:
+                    with open("txts/greeting.txt", 'r') as greetingf:
                         for i in range(greetnum):
                             greetmessage =greetingf.readline()
                     greetingf.close()
@@ -100,7 +100,7 @@ for event in longpoll.listen():
                 elif 15 < randnum <= 20:
                     goodbyenum = 4
 
-                with open("goodbyes.txt", 'r') as goodbyef:
+                with open("txts/goodbyes.txt", 'r') as goodbyef:
                     for i in range(goodbyenum):
                         greetmessage = goodbyef.readline()
                 goodbyef.close()
@@ -158,6 +158,29 @@ for event in longpoll.listen():
         elif 'Помогите!' in str(event):
             if event.from_chat:
                     say_message(f'Тебе уже ничего не поможет.{byezhong}')
+
         elif 'Чжун анекдот' in str(event) or 'чжун анекдот' in str(event):
             if event.from_chat:
                 say_message(joke())
+
+        elif 'Чжун альбомы' in str(event):
+            if event.from_chat:
+                f = open(f"txts/info/albums.txt", "r")
+                albmessage = ""
+                lines = f.readlines()
+                for line in lines:
+                    albmessage += line
+                albmessage += byezhong
+                f.close()
+                say_message(albmessage)
+
+        elif 'Чжун ссылки' in str(event):
+            if event.from_chat:
+                f = open(f"txts/info/urls.txt", "r")
+                urlmessage = ""
+                lines = f.readlines()
+                for line in lines:
+                    urlmessage += line
+                urlmessage += byezhong
+                f.close()
+                say_message(urlmessage)
