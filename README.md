@@ -1,2 +1,2 @@
 # GenshinBot
-Чат-бот для VK
+Информационный чат-бот по Genshin Impact для VK
