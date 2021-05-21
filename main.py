@@ -6,17 +6,20 @@ with open("loginstuff.json", "r") as read_file:
     data = json.load(read_file)
 
 
-token = data["token"]
-key = data["key"]
-server = data["server"]
-ts = data["ts"]
+token = data[0]["token"]
+longpoll = data[0]["longpoll"]
+key = data[0]["key"]
+server = data[0]["server"]
+ts = data[0]["ts"]
 
 vk_session = vk_api.VkApi(token=token)
 random.seed()
 from vk_api.bot_longpoll import VkBotLongPoll, VkBotEventType
 
-longpoll = VkBotLongPoll(vk_session, 203658568)
+longpoll = VkBotLongPoll(vk_session, longpoll)
 vk = vk_session.get_api()
+
+print("Бот успешно запущен")
 
 def saymessage(message, chatid):
     vk.messages.send(
