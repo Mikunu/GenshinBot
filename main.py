@@ -2,7 +2,16 @@ import vk_api, vk
 from vk_api.utils import get_random_id
 import datetime, random, json
 
-vk_session = vk_api.VkApi(token='f29dd2332c43bcc37bf87b807df1496d06627b1103654209109a1c541fbac967a255be4152baf8a928e94')
+with open("loginstuff.json", "r") as read_file:
+    data = json.load(read_file)
+
+
+token = data["token"]
+key = data["key"]
+server = data["server"]
+ts = data["ts"]
+
+vk_session = vk_api.VkApi(token=token)
 random.seed()
 from vk_api.bot_longpoll import VkBotLongPoll, VkBotEventType
 
@@ -11,9 +20,9 @@ vk = vk_session.get_api()
 
 def saymessage(message, chatid):
     vk.messages.send(
-        key='265b9078df036d8b0bc08fa119f73547cb9e6fd9',
-        server='https://lp.vk.com/wh203658568',
-        ts='1',
+        key=key,
+        server=server,
+        ts=ts,
         random_id=get_random_id(),
         message=message,
         chat_id=chatid
@@ -32,9 +41,9 @@ for event in longpoll.listen():
         if 'Моракс' in str(event) or 'моракс' in str(event):
             if event.from_chat:
                 vk.messages.send(
-                    key='265b9078df036d8b0bc08fa119f73547cb9e6fd9',
-                    server='https://lp.vk.com/wh203658568',
-                    ts='1',
+                    key=key,
+                    server=server,
+                    ts=ts,
                     random_id=get_random_id(),
                     message="Моракс умер",
                     attachment='photo-175821022_457239620',
@@ -55,9 +64,9 @@ for event in longpoll.listen():
                     saymessage('Дай мору\n\nС уважением, Чжун Ли.', event.chat_id)
                 else:
                     vk.messages.send(
-                        key='265b9078df036d8b0bc08fa119f73547cb9e6fd9',
-                        server='https://lp.vk.com/wh203658568',
-                        ts='1',
+                        key=key,
+                        server=server,
+                        ts=ts,
                         random_id=get_random_id(),
                         message='Сегодня выдался продуктивный день\n\nС уважением, Чжун Ли.',
                         attachment='photo-175821022_457239616',
@@ -90,9 +99,9 @@ for event in longpoll.listen():
                     pic = "photo480012858_457278730"
 
                 vk.messages.send(
-                    key='265b9078df036d8b0bc08fa119f73547cb9e6fd9',
-                    server='https://lp.vk.com/wh203658568',
-                    ts='1',
+                    key=key,
+                    server=server,
+                    ts=ts,
                     random_id=get_random_id(),
                     message="⠀⠀⠀⠀⠀⠀「" + message + "」\n⠀Дорогой путешественник, сегодня доступно:",
                     attachment=pic,
@@ -103,9 +112,9 @@ for event in longpoll.listen():
             if event.from_chat:
 
                 vk.messages.send(
-                    key='265b9078df036d8b0bc08fa119f73547cb9e6fd9',
-                    server='https://lp.vk.com/wh203658568',
-                    ts='1',
+                    key=key,
+                    server=server,
+                    ts=ts,
                     random_id=get_random_id(),
                     message=datetime.datetime.utcnow(),
                     chat_id=event.chat_id
