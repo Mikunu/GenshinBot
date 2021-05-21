@@ -85,10 +85,24 @@ for event in longpoll.listen():
 
         elif 'Пока!' in str(event) or 'пока!' in str(event):
             if event.from_chat:
-                if random.randint(0, 19) == 0:
-                    say_message('Вернись, мне мору надо!\n\nС уважением, Чжун Ли.')
-                else:
-                    say_message('До встречи!\n\nС уважением, Чжун Ли.')
+                randnum = random.randint(0, 19)
+
+                if randnum == 0:
+                    goodbyenum = 0
+                elif 1 < randnum < 6:
+                    goodbyenum = 1
+                elif 6 < randnum < 10:
+                    goodbyenum = 2
+                elif 10 < randnum <= 15:
+                    goodbyenum = 3
+                elif 15 < randnum <= 20:
+                    goodbyenum = 4
+
+                with open("goodbyes.txt", 'r') as goodbyef:
+                    for i in range(goodbyenum):
+                        greetmessage = goodbyef.readline()
+                goodbyef.close()
+                say_message(f'{greetmessage}\n\nС уважением, Чжун Ли.')
 
         elif 'Как дела?' in str(event) or 'как дела?' in str(event):
             if event.from_chat:
