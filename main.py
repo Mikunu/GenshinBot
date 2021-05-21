@@ -64,18 +64,35 @@ for event in longpoll.listen():
         elif 'Привет!' in str(event) or 'привет!' in str(event):
             if event.from_chat:
                 if random.randint(0, 19) == 0:
-                    say_message('Я родился!\nПоздравляю, сегодня тебе повезёт в гаче(нет)\n\nС уважением, Чжун Ли.',
-                                event.chat_id)
+                    say_message('Я родился!\nПоздравляю, сегодня тебе повезёт в гаче(нет)\n\nС уважением, Чжун Ли.')
                 else:
-                    say_message('Привет!\n\nС уважением, Чжун Ли.')
+                    greetnum = None
+                    nowtime = (datetime.datetime.utcnow() + datetime.timedelta(hours=3)).hour
+                    if 0 < nowtime < 4:
+                        greetnum = 4  # Ночь
+                    elif 4 < nowtime < 10:
+                        greetnum = 1  # Утро
+                    elif 10 < nowtime < 18:
+                        greetnum = 2  # День
+                    elif 18 < nowtime <= 23:
+                        greetnum = 3  # Вечер
+
+                    with open("greeting.txt", 'r') as greetingf:
+                        for i in range(greetnum):
+                            greetmessage =greetingf.readline()
+                    greetingf.close()
+                    say_message(f'{greetmessage}\n\nС уважением, Чжун Ли.')
 
         elif 'Пока!' in str(event) or 'пока!' in str(event):
             if event.from_chat:
-                say_message('Пока!\n\nС уважением, Чжун Ли.')
+                if random.randint(0, 19) == 0:
+                    say_message('Вернись, мне мору надо!\n\nС уважением, Чжун Ли.')
+                else:
+                    say_message('До встречи!\n\nС уважением, Чжун Ли.')
 
         elif 'Как дела?' in str(event) or 'как дела?' in str(event):
             if event.from_chat:
-                if (random.randint(0, 1) == 0):
+                if (random.randint(0, 19) == 0):
                     say_message('Дай мору\n\nС уважением, Чжун Ли.')
                 else:
                     say_message('Сегодня выдался продуктивный день\n\nС уважением, Чжун Ли.',
