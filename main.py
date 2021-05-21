@@ -3,6 +3,40 @@ from vk_api.utils import get_random_id
 import datetime, random, json
 from vk_api.bot_longpoll import VkBotLongPoll, VkBotEventType
 
+def say_message(text, attachment=None):
+    vk.messages.send(
+        key=key,
+        server=server,
+        ts=ts,
+        random_id=get_random_id(),
+        message=text,
+        attachment=attachment,
+        chat_id=event.chat_id
+    )
+
+"""
+def answer_message(chat_id, id_message, peer_id, text):
+    query_json = json.dumps({"peer_id": peer_id, "conversation_message_ids": [id_message], "is_reply": True})
+    vk_session.method('messages.send', {
+        'chat_id': chat_id,
+        'forward': [query_json],
+        'message': text,
+        'random_id': get_random_id()}
+        ) 17
+"""
+
+
+def joke():
+    num = random.randint(0, 19)
+    f = open(f"jokes/joke{num}.txt", "r")
+    message = "Дорогой друг, сейчас я расскажу тебе, что я сегодня прочитал в интересной книге\n\n"
+    lines = f.readlines()
+    for line in lines:
+        message += line
+    message += "\n\nС уважением, Чжун ли."
+    f.close()
+    return message
+
 with open("loginstuff.json", "r") as read_file:
     data = json.load(read_file)
 
@@ -19,29 +53,6 @@ longpoll = VkBotLongPoll(vk_session, longpoll)
 vk = vk_session.get_api()
 
 print("Бот успешно запущен")
-
-
-def say_message(text, attachment=None):
-    vk.messages.send(
-        key=key,
-        server=server,
-        ts=ts,
-        random_id=get_random_id(),
-        message=text,
-        attachment=attachment,
-        chat_id=event.chat_id
-    )
-
-
-def answer_message(chat_id, id_message, peer_id, text):
-    query_json = json.dumps({"peer_id": peer_id, "conversation_message_ids": [id_message], "is_reply": True})
-    vk_session.method('messages.send', {
-        'chat_id': chat_id,
-        'forward': [query_json],
-        'message': text,
-        'random_id': get_random_id()}
-        )
-
 
 for event in longpoll.listen():
     if event.type == VkBotEventType.MESSAGE_NEW:
@@ -113,4 +124,7 @@ for event in longpoll.listen():
 
         elif 'Помогите!' in str(event):
             if event.from_chat:
-                say_message('Тебе уже ничего не поможет.\n\nС уважением, Чжун Ли.')
+                    say_message('Тебе уже ничего не поможет.\n\nС уважением, Чжун Ли.')
+        elif 'Чжун анекдот' in str(event) or 'чжун анекдот' in str(event):
+            if event.from_chat:
+                say_message(joke())
