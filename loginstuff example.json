@@ -4,6 +4,7 @@
     "longpoll": 1234567890,
     "key": "",
     "server": "",
-    "ts": ""
+    "ts": "",
+    "servicekey": ""
   }
 ]

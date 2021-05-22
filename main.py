@@ -1,7 +1,8 @@
 import vk_api, vk
 from vk_api.utils import get_random_id
-import datetime, random, json
+import datetime, random, json, requests
 from vk_api.bot_longpoll import VkBotLongPoll, VkBotEventType
+
 
 byezhong = "\n\nС уважением, Чжун Ли."
 
@@ -39,6 +40,12 @@ def joke():
     f.close()
     return message
 
+def get_post(groupid=-183293188):
+    response = requests.post(f"https://api.vk.com/method/wall.get?owner_id={groupid}&count=1&access_token={servicekey}&v=5.131").json()
+    postid = response['response']['items'][0]['id']
+    attachment = f"wall{groupid}_{postid}"
+    return attachment
+
 with open("loginstuff.json", "r") as read_file:
     data = json.load(read_file)
 
@@ -47,6 +54,7 @@ longpoll = data[0]["longpoll"]
 key = data[0]["key"]
 server = data[0]["server"]
 ts = data[0]["ts"]
+servicekey = data[0]["servicekey"]
 
 vk_session = vk_api.VkApi(token=token)
 random.seed()
@@ -184,3 +192,7 @@ for event in longpoll.listen():
                 urlmessage += byezhong
                 f.close()
                 say_message(urlmessage)
+
+        elif '.getpost' in str(event):
+            if event.from_chat:
+                say_message(None, get_post())
